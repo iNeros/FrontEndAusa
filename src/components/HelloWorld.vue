@@ -76,42 +76,43 @@ export default {
 
   methods: {
     async getData(){
-      if(this.state1 == true && this.state2 == true){
-        this.errorMessage = false;
+      if(this.state1 == true && this.state2 == true ){
+        if(this.value1 < this.value2){
+          this.errorMessage = false;
 
-        const url = "https://localhost:44387/Reports";
-        const fechaIni = this.value1;
-        const fechaFin = this.value2;
-        const dataFetch = async (url,fechaIni,fechaFin) => {
-          return await fetch(url, {headers: {'sFechaIni': fechaIni , 'sFechaFin': fechaFin}})
-          .then(res => res.json()).catch(err => alert('err' + err.errorMessage));
-        }
-        const tempData = await dataFetch(url,fechaIni,fechaFin);
+          const url = "https://localhost:44387/Reports";
+          const fechaIni = this.value1;
+          const fechaFin = this.value2;
+          const dataFetch = async (url,fechaIni,fechaFin) => {
+            return await fetch(url, {headers: {'sFechaIni': fechaIni , 'sFechaFin': fechaFin}})
+            .then(res => res.json()).catch(err => alert('err' + err.Message));
+          }
+          const tempData = await dataFetch(url,fechaIni,fechaFin);
 
-        this.dataTables = await tempData;
+          this.dataTables = await tempData;
 
-        console.log(this.dataTables);
-        console.log(this.dataTables[0]);
+          console.log(this.dataTables);
+          console.log(this.dataTables[0]);
 
 
-        let count = 0;
-        this.dataTables[0].forEach(() => {
-          this.dataFinal.push({
-            nrreporte: this.dataTables[0][count], 
-            svindice: this.dataTables[1][count], 
-            svfhreporte: this.dataTables[2][count], 
-            prnombre: this.dataTables[3][count], 
-            prrfc: this.dataTables[4][count], 
-            clnombre: this.dataTables[5][count],
-            clestatus: this.dataTables[6][count],
-            sunombre: this.dataTables[7][count],
-            susupervisoria: this.dataTables[8][count],
+          let count = 0;
+          this.dataTables[0].forEach(() => {
+            this.dataFinal.push({
+              nrreporte: this.dataTables[0][count], 
+              svindice: this.dataTables[1][count], 
+              svfhreporte: this.dataTables[2][count], 
+              prnombre: this.dataTables[3][count], 
+              prrfc: this.dataTables[4][count], 
+              clnombre: this.dataTables[5][count],
+              clestatus: this.dataTables[6][count],
+              sunombre: this.dataTables[7][count],
+              susupervisoria: this.dataTables[8][count],
+            });
+            count+=1;
           });
-          count += 1;
-        });
-
-        
-        
+        } else{
+          this.errorMessage = true
+        }       
       }else{
         this.errorMessage = true;
       }
