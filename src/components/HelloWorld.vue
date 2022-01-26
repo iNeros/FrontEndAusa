@@ -107,6 +107,7 @@ export default {
             sunombre: this.dataTables[7][count],
             susupervisoria: this.dataTables[8][count],
           });
+          count += 1;
         });
 
         
